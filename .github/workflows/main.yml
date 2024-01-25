@@ -22,7 +22,7 @@ jobs:
         run: |
           cd ./simple-api  
           mvn clean install
-          mvn clean verify sonar:sonar
+          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bribrix_devops-livecoding
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
