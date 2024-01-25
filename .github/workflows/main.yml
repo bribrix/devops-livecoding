@@ -22,6 +22,8 @@ jobs:
         run: |
           cd ./simple-api  
           mvn clean install
+          mvn clean verify sonar:sonar
+
 
   build-and-push-docker-image:
     needs: test-backend
