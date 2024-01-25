@@ -24,7 +24,7 @@ jobs:
           mvn clean install
 
       # define job to build and publish docker image
-      build-and-push-docker-image:
+    build-and-push-docker-image:
       needs: test-backend
       # run only when code is compiling and tests are passing
       runs-on: ubuntu-22.04
