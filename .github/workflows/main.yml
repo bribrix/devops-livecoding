@@ -19,5 +19,6 @@ jobs:
           java-version: '17'
 
       - name: Build and test with Maven
-        run: mvn clean install
-
+        run: |
+          cd ./simple-api  
+          mvn clean install
