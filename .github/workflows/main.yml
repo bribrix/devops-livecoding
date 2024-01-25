@@ -23,7 +23,8 @@ jobs:
           cd ./simple-api  
           mvn clean install
           mvn clean verify sonar:sonar
-
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build-and-push-docker-image:
     needs: test-backend
