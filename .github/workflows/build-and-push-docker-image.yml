@@ -1,34 +1,14 @@
-name: CI devops 2023
+name: Build and Push Docker Image CI
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  test-backend:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v2.5.0
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-
-      - name: Build and test with Maven
-        run: |
-          cd ./simple-api  
-          mvn clean install
-          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=bribrix_devops-livecoding
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   build-and-push-docker-image:
-    needs: test-backend
     runs-on: ubuntu-22.04
+    needs: test-backend
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
@@ -56,4 +36,3 @@ jobs:
           context: ./http-server
           tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
           push: ${{ github.ref == 'refs/heads/main' }}
-
