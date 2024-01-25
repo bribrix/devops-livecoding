@@ -1,19 +1,23 @@
-name: Docker Image CI
+name: CI devops 2023
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
+  test-backend:
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) --context .
+      - uses: actions/checkout@v2.5.0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Build and test with Maven
+        run: mvn clean install
+
